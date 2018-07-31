@@ -1,0 +1,11 @@
+.review-buttons {
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*margin-left: 20px;*/
+    margin-bottom: 10px;
+}
+
+.review-buttons-button {
+    margin-left: 30px;
+    margin-right: 100px;
+}
