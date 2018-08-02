@@ -5,6 +5,7 @@ import { Layout, Menu, Breadcrumb, Icon} from 'antd';
 import SysMenu from './components/sys/SysMenu';
 import SysOrganization from './components/sys/SysOrganization';
 import SysRole from './components/sys/SysRole';
+import SysUser from './components/sys/SysUser';
 import RepaymentNonPerformingLoan from './components/NonPerformingLoan/repayment';
 import {connect} from 'react-redux';
 import FontAwesome from 'react-fontawesome';
@@ -27,7 +28,7 @@ class App extends Component {
         //设置初始状态
         this.state = {
             collapsed: false,
-            breadCrumb: [],
+            breadCrumb: ['homepage'],
             currentMenuKey: "",
             menus: []
         };
@@ -35,7 +36,7 @@ class App extends Component {
 
     onMenuClick= (e)=> {
         this.setState ({
-            breadCrumb: e.keyPath,
+            breadCrumb: e.keyPath.reverse(),
             currentMenuKey: e.key
         });
 
@@ -58,6 +59,7 @@ class App extends Component {
 
     getCnTitle = (enTitle) =>{
         switch(enTitle){
+            case "homepage": return "首页";
             case "sys": return "系统设置";
             case "sysmenu": return "菜单管理";
             case "sysarea": return "区域管理";
@@ -65,7 +67,7 @@ class App extends Component {
             case "sysrole": return "角色管理";
             case "sysuser": return "用户管理";
 
-            default: return "首页";
+            default: return "无法解析";
         }
     };
 
@@ -75,6 +77,7 @@ class App extends Component {
             case "sysarea": return <RepaymentNonPerformingLoan/>
             case "sysorganization": return <SysOrganization/>
             case "sysrole": return <SysRole/>
+            case "sysuser": return <SysUser/>
 
             default: return <div></div>
         }
@@ -98,7 +101,6 @@ class App extends Component {
         <div style={{height:'100%'}}>
         <Layout style={{height: '100%'}}>
             <Header className="header">
-
                 <div className="header-logo">
                     <div>
                         <img src={require('./image/logo1.png')} style={styleImage} />
@@ -136,8 +138,8 @@ class App extends Component {
 
                     </Menu>
                 </Sider>
-                <Layout style={{ padding: '0 24px 24px'}}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
+                <Layout style={{ padding: '0 10px 10px',height:'100%'}}>
+                    <Breadcrumb style={{ padding: '10px 0 10px 10px' }}>
                         {
                             this.state.breadCrumb.map((title,index)=>{
                                 let cnTitle = this.getCnTitle(title);
@@ -145,7 +147,7 @@ class App extends Component {
                             })
                         }
                     </Breadcrumb>
-                    <Content style={{ background: '#fff', padding: 24, margin: 0, height: '100%'}}>
+                    <Content style={{ background: '#fff', paddingTop:'10px',paddingLeft:'10px', height: '83%'}}>
                         {
                             this.getCurrentMenuContent()
                         }
