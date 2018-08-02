@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35a28588-100d-43ea-b14a-872bd169309d" name="Default" comment="修正:更新不良贷款记录时，时间不正确的bug（如输入2017-01-31,则上传时的时间是2017-01-30）" />
+    <list default="true" id="35a28588-100d-43ea-b14a-872bd169309d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" afterPath="$PROJECT_DIR$/src/App.css" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js" afterPath="$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -14,53 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SysOrganization.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/sys/SysOrganization.js">
+      <file leaf-file-name="xhr.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/xhr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="131" column="43" lean-forward="false" selection-start-line="131" selection-start-column="43" selection-end-line="131" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#426#503#0" expanded="false" />
-                <element signature="e#504#582#0" expanded="false" />
-                <element signature="e#583#660#0" expanded="false" />
-                <element signature="e#661#744#0" expanded="false" />
-                <element signature="e#745#828#0" expanded="false" />
-                <element signature="e#829#908#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AddOrganizationWindow.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/AddOrganizationWindow.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1144">
-              <caret line="166" column="65" lean-forward="false" selection-start-line="166" selection-start-column="65" selection-end-line="166" selection-end-column="65" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginWindow.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="25" />
+            <state relative-caret-position="-110">
+              <caret line="2" column="28" lean-forward="false" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -69,8 +32,8 @@
       <file leaf-file-name="SysRole.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/sys/SysRole.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1004">
-              <caret line="358" column="166" lean-forward="false" selection-start-line="358" selection-start-column="166" selection-end-line="358" selection-end-column="166" />
+            <state relative-caret-position="358">
+              <caret line="310" column="86" lean-forward="false" selection-start-line="310" selection-start-column="51" selection-end-line="310" selection-end-column="86" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
                 <element signature="e#433#510#0" expanded="false" />
@@ -94,12 +57,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SysUser.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SysUser.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/sys/SysUser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="554">
+              <caret line="329" column="54" lean-forward="false" selection-start-line="329" selection-start-column="54" selection-end-line="329" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#467#544#0" expanded="false" />
+                <element signature="e#663#829#0" expanded="false" />
+                <element signature="e#832#927#0" expanded="false" />
+                <element signature="e#1021#1129#0" expanded="false" />
+                <element signature="e#1132#1215#0" expanded="false" />
+                <element signature="e#1216#1307#0" expanded="false" />
+                <element signature="e#1991#3129#0" expanded="false" />
+                <element signature="e#3135#3243#0" expanded="false" />
+                <element signature="e#3276#3636#0" expanded="false" />
+                <element signature="e#4619#4703#0" expanded="false" />
+                <element signature="e#5037#7726#0" expanded="false" />
+                <element signature="e#8410#8495#0" expanded="false" />
+                <element signature="e#8536#9864#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,12 +85,10 @@
       <file leaf-file-name="UpdateRoleWindow.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/UpdateRoleWindow.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1012">
-              <caret line="419" column="44" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="419" selection-end-column="44" />
+            <state relative-caret-position="963">
+              <caret line="109" column="5" lean-forward="true" selection-start-line="94" selection-start-column="4" selection-end-line="109" selection-end-column="5" />
               <folding>
-                <element signature="e#1892#3908#0" expanded="false" />
                 <element signature="e#3914#3998#0" expanded="false" />
-                <element signature="e#4021#4306#0" expanded="false" />
                 <element signature="e#4312#4444#0" expanded="false" />
                 <element signature="e#4475#4999#0" expanded="false" />
                 <element signature="e#5005#5122#0" expanded="false" />
@@ -132,48 +108,65 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SysMenu.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/sys/SysMenu.js">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="137" column="43" lean-forward="false" selection-start-line="137" selection-start-column="43" selection-end-line="137" selection-end-column="43" />
+            <state relative-caret-position="2046">
+              <caret line="93" column="12" lean-forward="false" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
               <folding>
-                <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#379#456#0" expanded="false" />
-                <element signature="e#457#540#0" expanded="false" />
-                <element signature="e#541#630#0" expanded="false" />
-                <element signature="e#631#722#0" expanded="false" />
-                <element signature="e#723#804#0" expanded="false" />
-                <element signature="e#805#896#0" expanded="false" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewRoleWindow.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/ViewRoleWindow.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3850">
-              <caret line="293" column="33" lean-forward="false" selection-start-line="293" selection-start-column="33" selection-end-line="293" selection-end-column="33" />
+            <state relative-caret-position="132">
+              <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="route.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="35" column="65" lean-forward="true" selection-start-line="35" selection-start-column="65" selection-end-line="35" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnauthorizedLayout.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/layouts/UnauthorizedLayout.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="7" lean-forward="true" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
               <folding>
-                <element signature="e#1893#3909#0" expanded="false" />
-                <element signature="e#3915#3999#0" expanded="false" />
-                <element signature="e#4022#4307#0" expanded="false" />
-                <element signature="e#4313#4445#0" expanded="false" />
-                <element signature="e#4476#5000#0" expanded="false" />
-                <element signature="e#5006#5123#0" expanded="false" />
-                <element signature="e#5338#5563#0" expanded="false" />
-                <element signature="e#5601#5859#0" expanded="false" />
+                <element signature="e#0#25#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewOrganizationWindow.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/ViewOrganizationWindow.js">
+      <file leaf-file-name="LoginWindow.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
-              <caret line="225" column="93" lean-forward="false" selection-start-line="225" selection-start-column="78" selection-end-line="225" selection-end-column="93" />
+            <state relative-caret-position="-213">
+              <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -191,21 +184,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>resh</find>
-      <find>updateMenuData</find>
-      <find>currentMenuParentMenu</find>
-      <find>pagination</find>
-      <find>currentMenu</find>
-      <find>onsingleMenuClick</find>
-      <find>breadCru</find>
-      <find>currentMenuKey</find>
-      <find>fetching</find>
-      <find>pushingData</find>
-      <find>record</find>
-      <find>treeData</find>
-      <find>ergodic</find>
-      <find>menu</find>
-      <find>select</find>
       <find>模块数据是</find>
       <find>style</find>
       <find>please</find>
@@ -218,9 +196,24 @@
       <find>useableChecked</find>
       <find>organizationListItemDisabled</find>
       <find>currentSelectRow</find>
-      <find>currentSelect</find>
       <find>handleSelectChange</find>
       <find>handleS</find>
+      <find>treeData</find>
+      <find>https://at.alicdn.com/t/font</find>
+      <find>header</find>
+      <find>currentSelect</find>
+      <find>breadCrumb</find>
+      <find>App-logo-spin</find>
+      <find>App-logo</find>
+      <find>App-title</find>
+      <find>spin</find>
+      <find>App-intro</find>
+      <find>menu-la</find>
+      <find>app-footer</find>
+      <find>components-layout</find>
+      <find>header-logo</find>
+      <find>App-header</find>
+      <find>renderMessage</find>
     </findStrings>
     <dirStrings>
       <dir>D:\WebstormProjects\ims2\node_modules\react-dev-utils</dir>
@@ -260,11 +253,9 @@
         <option value="$PROJECT_DIR$/config/webpack.config.prod.js" />
         <option value="$PROJECT_DIR$/config/webpack.config.dev.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/components/NonPerformingLoan/widgets/UpdateNonPerformingLoanWindow.js" />
         <option value="$PROJECT_DIR$/src/components/NonPerformingLoan/compute.js" />
         <option value="$PROJECT_DIR$/src/utils/xhr.js" />
-        <option value="$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js" />
         <option value="$PROJECT_DIR$/src/AuthorizedRoute.js" />
         <option value="$PROJECT_DIR$/src/reducers/loggedUserReducer.js" />
         <option value="$PROJECT_DIR$/src/components/sys/widgets/ViewMenuWindow.js" />
@@ -274,7 +265,6 @@
         <option value="$PROJECT_DIR$/src/components/sys/widgets/UpdateMenuWindow.js" />
         <option value="$PROJECT_DIR$/src/components/sys/widgets/ViewOrganizationWindow.js" />
         <option value="$PROJECT_DIR$/src/components/sys/widgets/UpdateOrganizationWindow.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/utils/WrapedFetch.js" />
         <option value="$PROJECT_DIR$/src/components/sys/widgets/AddRoleWindow.js" />
         <option value="$PROJECT_DIR$/src/components/sys/widgets/UpdateRoleWindow.js" />
@@ -283,6 +273,9 @@
         <option value="$PROJECT_DIR$/src/components/sys/widgets/ViewRoleWindow.js" />
         <option value="$PROJECT_DIR$/src/components/sys/SysRole.js" />
         <option value="$PROJECT_DIR$/src/components/sys/SysUser.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js" />
       </list>
     </option>
   </component>
@@ -332,6 +325,11 @@
             <path>
               <item name="duobi-manage-qianduan" type="b2602c69:ProjectViewProjectNode" />
               <item name="duobi-manage-qianduan" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="duobi-manage-qianduan" type="b2602c69:ProjectViewProjectNode" />
+              <item name="duobi-manage-qianduan" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -346,13 +344,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="LoginWindow" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="duobi-manage-qianduan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="duobi-manage-qianduan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="sys" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="duobi-manage-qianduan" type="b2602c69:ProjectViewProjectNode" />
@@ -482,7 +473,7 @@
       <workItem from="1531355880402" duration="101742000" />
       <workItem from="1532141437301" duration="236000" />
       <workItem from="1532484430018" duration="4086000" />
-      <workItem from="1532911615387" duration="25717000" />
+      <workItem from="1532911615387" duration="59181000" />
     </task>
     <task id="LOCAL-00001" summary="修正计息方式，增加第一期复利计算">
       <created>1517293433862</created>
@@ -498,11 +489,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517475774616</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="修正:首页样式，增加用户管理模块">
+      <created>1533173353529</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1533173353529</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="781301000" />
+    <option name="totallyTimeSpent" value="814765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -511,6 +509,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932693" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287234" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -525,7 +524,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -538,7 +536,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修正计息方式，增加第一期复利计算" />
     <MESSAGE value="修正:更新不良贷款记录时，时间不正确的bug（如输入2017-01-31,则上传时的时间是2017-01-30）" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正:更新不良贷款记录时，时间不正确的bug（如输入2017-01-31,则上传时的时间是2017-01-30）" />
+    <MESSAGE value="修正:首页样式，增加用户管理模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="修正:首页样式，增加用户管理模块" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -547,27 +546,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/present/widgets/RegisterPresentWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="80" column="39" lean-forward="false" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-dev-utils/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="42" column="24" lean-forward="false" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/present/presentType.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -596,13 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/layouts/UnauthorizedLayout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/style/themes/default.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4387">
@@ -614,13 +585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="33" column="54" lean-forward="false" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/iconfont/iconfont.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -652,20 +616,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/present/presentRecord.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1716">
@@ -687,27 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/loginwindow.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/NonPerformingLoan/close.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -719,13 +648,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="36" column="41" lean-forward="false" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -802,13 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/UpdateOrganizationWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1247">
-          <caret line="194" column="62" lean-forward="true" selection-start-line="194" selection-start-column="62" selection-end-line="194" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/WrapedFetch.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -817,46 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/xhr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-499">
-          <caret line="2" column="28" lean-forward="false" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/WrapedCheckBox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="3" column="20" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/AddOrganizationWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="166" column="65" lean-forward="false" selection-start-line="166" selection-start-column="65" selection-end-line="166" selection-end-column="65" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -882,60 +761,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sys/SysOrganization.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="131" column="43" lean-forward="false" selection-start-line="131" selection-start-column="43" selection-end-line="131" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#426#503#0" expanded="false" />
-            <element signature="e#504#582#0" expanded="false" />
-            <element signature="e#583#660#0" expanded="false" />
-            <element signature="e#661#744#0" expanded="false" />
-            <element signature="e#745#828#0" expanded="false" />
-            <element signature="e#829#908#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/sys/SysMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="559">
           <caret line="137" column="43" lean-forward="false" selection-start-line="137" selection-start-column="43" selection-end-line="137" selection-end-column="43" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#379#456#0" expanded="false" />
             <element signature="e#457#540#0" expanded="false" />
             <element signature="e#541#630#0" expanded="false" />
             <element signature="e#631#722#0" expanded="false" />
             <element signature="e#723#804#0" expanded="false" />
             <element signature="e#805#896#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/UpdateRoleWindow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1012">
-          <caret line="419" column="44" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="419" selection-end-column="44" />
-          <folding>
-            <element signature="e#1892#3908#0" expanded="false" />
-            <element signature="e#3914#3998#0" expanded="false" />
-            <element signature="e#4021#4306#0" expanded="false" />
-            <element signature="e#4312#4444#0" expanded="false" />
-            <element signature="e#4475#4999#0" expanded="false" />
-            <element signature="e#5005#5122#0" expanded="false" />
-            <element signature="e#5160#5290#0" expanded="false" />
-            <element signature="e#5296#5349#0" expanded="false" />
-            <element signature="e#5382#6697#0" expanded="false" />
-            <element signature="e#6703#6750#0" expanded="false" />
-            <element signature="e#6840#6924#0" expanded="false" />
-            <element signature="e#7004#7070#0" expanded="false" />
-            <element signature="e#7115#7193#0" expanded="false" />
-            <element signature="e#8924#8997#0" expanded="false" />
-            <element signature="e#9026#9113#0" expanded="false" />
-            <element signature="e#9160#9385#0" expanded="false" />
-            <element signature="e#9423#9681#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -965,10 +802,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/AddOrganizationWindow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1144">
+          <caret line="166" column="65" lean-forward="false" selection-start-line="166" selection-start-column="65" selection-end-line="166" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sys/SysOrganization.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="260" column="57" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="260" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+            <element signature="e#426#503#0" expanded="false" />
+            <element signature="e#504#582#0" expanded="false" />
+            <element signature="e#583#660#0" expanded="false" />
+            <element signature="e#661#744#0" expanded="false" />
+            <element signature="e#745#828#0" expanded="false" />
+            <element signature="e#829#908#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/UpdateOrganizationWindow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="194" column="62" lean-forward="true" selection-start-line="194" selection-start-column="62" selection-end-line="194" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sys/widgets/UpdateRoleWindow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="963">
+          <caret line="109" column="5" lean-forward="true" selection-start-line="94" selection-start-column="4" selection-end-line="109" selection-end-column="5" />
+          <folding>
+            <element signature="e#3914#3998#0" expanded="false" />
+            <element signature="e#4312#4444#0" expanded="false" />
+            <element signature="e#4475#4999#0" expanded="false" />
+            <element signature="e#5005#5122#0" expanded="false" />
+            <element signature="e#5160#5290#0" expanded="false" />
+            <element signature="e#5296#5349#0" expanded="false" />
+            <element signature="e#5382#6697#0" expanded="false" />
+            <element signature="e#6703#6750#0" expanded="false" />
+            <element signature="e#6840#6924#0" expanded="false" />
+            <element signature="e#7004#7070#0" expanded="false" />
+            <element signature="e#7115#7193#0" expanded="false" />
+            <element signature="e#8924#8997#0" expanded="false" />
+            <element signature="e#9026#9113#0" expanded="false" />
+            <element signature="e#9160#9385#0" expanded="false" />
+            <element signature="e#9423#9681#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/sys/SysRole.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1004">
-          <caret line="358" column="166" lean-forward="false" selection-start-line="358" selection-start-column="166" selection-end-line="358" selection-end-column="166" />
+        <state relative-caret-position="358">
+          <caret line="310" column="86" lean-forward="false" selection-start-line="310" selection-start-column="51" selection-end-line="310" selection-end-column="86" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#433#510#0" expanded="false" />
@@ -993,8 +888,136 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/sys/SysUser.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="554">
+          <caret line="329" column="54" lean-forward="false" selection-start-line="329" selection-start-column="54" selection-end-line="329" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#467#544#0" expanded="false" />
+            <element signature="e#663#829#0" expanded="false" />
+            <element signature="e#832#927#0" expanded="false" />
+            <element signature="e#1021#1129#0" expanded="false" />
+            <element signature="e#1132#1215#0" expanded="false" />
+            <element signature="e#1216#1307#0" expanded="false" />
+            <element signature="e#1991#3129#0" expanded="false" />
+            <element signature="e#3135#3243#0" expanded="false" />
+            <element signature="e#3276#3636#0" expanded="false" />
+            <element signature="e#4619#4703#0" expanded="false" />
+            <element signature="e#5037#7726#0" expanded="false" />
+            <element signature="e#8410#8495#0" expanded="false" />
+            <element signature="e#8536#9864#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/iconfont/iconfont.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-858">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/dist/antd.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="362" column="40" lean-forward="false" selection-start-line="362" selection-start-column="12" selection-end-line="362" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.css">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Hover-master/css/hover.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="25" column="1" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="25" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logo.svg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/xhr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-110">
+          <caret line="2" column="28" lean-forward="false" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="35" column="65" lean-forward="true" selection-start-line="35" selection-start-column="65" selection-end-line="35" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/layouts/UnauthorizedLayout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="7" lean-forward="true" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/loginwindow.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2046">
+          <caret line="93" column="12" lean-forward="false" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/LoginWindow/LoginWindow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-213">
+          <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
           <folding />
         </state>
       </provider>

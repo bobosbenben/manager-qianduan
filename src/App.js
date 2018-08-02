@@ -30,7 +30,8 @@ class App extends Component {
             collapsed: false,
             breadCrumb: ['homepage'],
             currentMenuKey: "",
-            menus: []
+            menus: [],
+            tagName: 'link'
         };
     }
 
@@ -107,6 +108,10 @@ class App extends Component {
                     </div>
                     <h2 style={{color:'#fff'}}>伊金霍洛农村商业银行数据分析系统</h2>
                 </div>
+                <div className="hvr-grow">
+                    <Icon type="logout" style={{ fontSize: 16, color: '#fff'}}/>
+                    <span style={{ fontSize: 16, color: '#fff', paddingLeft:'10px'}}>退出</span>
+                </div>
             </Header>
             <Layout style={{height: '100%'}}>
                 <Sider width={220} style={{ background: '#fff'}} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
@@ -121,11 +126,13 @@ class App extends Component {
                         {this.props.initialData != undefined?this.props.initialData.menuList[0].children.map(v => {
                             return v.children
                                 ? <SubMenu key={v.target}
-                                           title={<span><FontAwesome name={v.iconCls} style={{paddingRight:"5px"}}/><span style={{fontSize:'16px'}}>{v.name}</span></span>}>
+                                           // title={<span><FontAwesome name={v.iconCls} style={{paddingRight:"5px"}}/><span style={{fontSize:'16px'}}>{v.name}</span></span>}>
+                                             title={<span><Icon type="user" /><span>{v.name}</span></span>}>
                                     {
                                         v.children.map(v2 => {
                                             return <Menu.Item key={v2.target} style={{fontSize:'13px'}}>
-                                                <FontAwesome style={{paddingRight:'5px'}} name={v2.iconCls}/>
+                                                {/*<FontAwesome style={{paddingRight:'5px'}} name={v2.iconCls}/>*/}
+                                                <Icon type={this.state.tagName}/>
                                                 <span>{v2.name}</span>
                                             </Menu.Item>
                                         })
