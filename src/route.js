@@ -10,6 +10,9 @@ import {Provider} from 'react-redux';
 import UnauthorizedLayout from './layouts/UnauthorizedLayout';
 import AuthorizedRoute from './AuthorizedRoute';
 import store from './store';
+import { LocaleProvider } from 'antd';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
+import 'moment/locale/zh-cn';
 
 export default class AppRoute extends Component {
 
@@ -30,15 +33,17 @@ export default class AppRoute extends Component {
 
         return(
             <Provider store={store}>
-                <Router>
-                    <div style={{height: '100%'}}>
-                        <Switch>
-                            <Route path="/auth" component={UnauthorizedLayout} />
-                            <AuthorizedRoute path="/app" component={App} />
-                            <Redirect to="/app" />
-                        </Switch>
-                    </div>
-                </Router>
+                <LocaleProvider locale={zh_CN}>
+                    <Router>
+                        <div style={{height: '100%'}}>
+                            <Switch>
+                                <Route path="/auth" component={UnauthorizedLayout} />
+                                <AuthorizedRoute path="/app" component={App} />
+                                <Redirect to="/app" />
+                            </Switch>
+                        </div>
+                    </Router>
+                </LocaleProvider>
             </Provider>
         )
     }
