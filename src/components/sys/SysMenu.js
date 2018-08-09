@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import ReactDOM from 'react-dom';
 import { Table, Button, Modal, message } from 'antd';
 import {connect} from 'react-redux';
 import AddMenuWindow from './widgets/AddMenuWindow';
@@ -50,7 +51,8 @@ class SysMenu extends Component {
             treeData: [],                   //菜单树数据
             addMenuModalVisible: false,     //添加菜单window
             updateMenuModalVisible: false,  //更新菜单window
-            viewMenuModalVisible: false     //查看菜单window
+            viewMenuModalVisible: false,    //查看菜单window
+            tableHeight: 0                  //table和按钮所占的屏幕高度，用于动态调整table的高度
         };
 
         this.event= this.event.bind(this);
@@ -92,6 +94,12 @@ class SysMenu extends Component {
 
     componentDidMount(){
         this.fetchData();
+        this.tableRef();
+        window.addEventListener('resize',this.tableRef)
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('resize',this.tableRef)
     }
 
     /**
@@ -192,6 +200,15 @@ class SysMenu extends Component {
         });
     }
 
+    tableRef = ()=>{
+        let table = ReactDOM.findDOMNode(this.refs.tableRef);
+        if (table !== null && table !== undefined){
+            var clientHeight = table.clientHeight;
+            if(clientHeight>120) clientHeight = clientHeight - 120; //120是按钮和其他pading占用的高度
+            this.setState({tableHeight:clientHeight})
+        }
+    }
+
     render(){
 
         const {currentMenuButton} = this.props;
@@ -207,22 +224,24 @@ class SysMenu extends Component {
 
         return(
             <div style={{overflow:'auto',height:'100%'}}>
-                <div>
-                    {
-                        currentMenuButton.map(button =>{
-                            return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
-                        })
-                    }
-                </div>
-                <div style={{ marginTop:'20px' }}>
-                    <Table columns={columns}
-                           rowKey={record => record.id}
-                           dataSource={this.state.treeData}
-                           pagination={false}
-                           loading={this.state.loading}
-                           rowSelection={rowSelection}
-                           scroll={{y:true}}
-                    />
+                <div style={{height:'100%',display:'flex',flexDirection:'column'}} ref="tableRef">
+                    <div style={{height:'30px',backgroundColor:'#ECECEC', padding:'5px 0px 38px 0px'}}>
+                        {
+                            currentMenuButton.map(button =>{
+                                return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                            })
+                        }
+                    </div>
+                    <div style={{ marginTop:'10px', flex:'auto'}}>
+                        <Table columns={columns}
+                               rowKey={record => record.id}
+                               dataSource={this.state.treeData}
+                               pagination={false}
+                               loading={this.state.loading}
+                               rowSelection={rowSelection}
+                               scroll={{y:this.state.tableHeight}}
+                        />
+                    </div>
                 </div>
                 <Modal
                     title="添加菜单"

@@ -301,14 +301,7 @@ class SysRole extends Component {
 
         return(
             <div style={{overflow:'auto',height:'100%'}}>
-                <div>
-                    {
-                        currentMenuButton.map(button =>{
-                            return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
-                        })
-                    }
-                </div>
-                <div style={{ background: '#ECECEC', padding: '30px',marginTop: '20px' }}>
+                <div style={{ background: '#ECECEC', padding: '10px'}}>
                     <Row gutter={16}>
                         <Col span={4}>
                             <Card title="系统模块" bordered={false}>
@@ -319,6 +312,13 @@ class SysRole extends Component {
                         </Col>
                         <Col span={20}>
                             <div>
+                                {
+                                    currentMenuButton.map(button =>{
+                                        return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                    })
+                                }
+                            </div>
+                            <div style={{marginTop:'10px'}}>
                                 <Table columns={columns}
                                        rowKey={record => record.id}
                                        dataSource={this.state.currentModuleRoles}
