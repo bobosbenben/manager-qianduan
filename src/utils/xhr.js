@@ -74,3 +74,32 @@ export const login = (username,password) => {
             })
     })
 }
+
+export const logout = ()=>{
+    return new Promise((resolve, reject) => {
+        let url = '/sys/logout';
+
+        fetch(url, {
+            credentials: 'include',
+            method: 'POST',
+        })
+            .then(res=>{
+                if (res.status !== 200) Modal.error({
+                    title: '错误',
+                    content: '退出系统登录时出错'
+                });
+
+                store.dispatch({
+                    type: 'SET_LOGGED_USER',
+                    logged: false
+                });
+                store.dispatch({
+                    type: 'SET_INITIAL_DATA',
+                    data: null
+                });
+                resolve({
+                    logged: false
+                });
+            })
+    })
+}

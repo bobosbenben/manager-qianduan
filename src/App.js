@@ -8,6 +8,7 @@ import SysRole from './components/sys/SysRole';
 import SysUser from './components/sys/SysUser';
 import RepaymentNonPerformingLoan from './components/NonPerformingLoan/repayment';
 import {connect} from 'react-redux';
+import {logout} from './utils/xhr';
 import FontAwesome from 'react-fontawesome';
 
 
@@ -88,6 +89,17 @@ class App extends Component {
         this.setState({ collapsed });
     }
 
+    onLogoutClick=()=>{
+        let history = this.props.history;
+        logout()
+            .then((logout)=>{
+            if(logout === false){
+                console.log('退出登录成功');
+                history.push('/app');
+            }
+        });
+    }
+
   render() {
 
     const styleImage = {
@@ -108,7 +120,7 @@ class App extends Component {
                     </div>
                     <h2 style={{color:'#fff'}}>伊金霍洛农村商业银行数据分析系统</h2>
                 </div>
-                <div className="hvr-grow">
+                <div className="hvr-grow" onClick={this.onLogoutClick}>
                     <Icon type="logout" style={{ fontSize: 16, color: '#fff'}}/>
                     <span style={{ fontSize: 16, color: '#fff', paddingLeft:'10px'}}>退出</span>
                 </div>
@@ -127,12 +139,12 @@ class App extends Component {
                             return v.children
                                 ? <SubMenu key={v.target}
                                            // title={<span><FontAwesome name={v.iconCls} style={{paddingRight:"5px"}}/><span style={{fontSize:'16px'}}>{v.name}</span></span>}>
-                                             title={<span><Icon type="user" /><span>{v.name}</span></span>}>
+                                             title={<span><Icon type={v.iconCls} /><span>{v.name}</span></span>}>
                                     {
                                         v.children.map(v2 => {
                                             return <Menu.Item key={v2.target} style={{fontSize:'13px'}}>
                                                 {/*<FontAwesome style={{paddingRight:'5px'}} name={v2.iconCls}/>*/}
-                                                <Icon type={this.state.tagName}/>
+                                                <Icon type={v2.iconCls}/>
                                                 <span>{v2.name}</span>
                                             </Menu.Item>
                                         })
@@ -145,7 +157,7 @@ class App extends Component {
 
                     </Menu>
                 </Sider>
-                <Layout style={{ padding: '0 10px 10px',height:'100%'}}>
+                <Layout style={{ padding: '0 10px 10px',height:'100%',display:'flex',flexDirection:'column'}}>
                     <Breadcrumb style={{ padding: '10px 0 10px 10px' }}>
                         {
                             this.state.breadCrumb.map((title,index)=>{
