@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import {Spin} from 'antd';
 import {getInitialData, getLoggedUser} from './utils/xhr'
 import {Icon} from 'antd';
 
@@ -10,13 +11,20 @@ class AuthorizedRoute extends React.Component {
         getLoggedUser()
     }
 
+    loadingPage = ()=>{
+        return <div>
+            <Icon type="loading" />
+            {/*<Spin size="large" />*/}
+        </div>
+    }
+
     render() {
         const { component: Component, pending, logged, ...rest } = this.props;
 
         return (
             <Route {...rest} render={props => {
-                if (pending) return <div><Icon type="loading" /></div>
-                console.log('logged的状态'); console.log(logged);
+                if (pending) return <div><Spin size="large"/></div>
+                // console.log('logged的状态'); console.log(logged);
                 if(logged === true) {
                     //用户已经登陆，做初始化操作
                     console.log('用户已经登陆');
