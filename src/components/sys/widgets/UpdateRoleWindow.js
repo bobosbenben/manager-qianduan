@@ -7,7 +7,7 @@ const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 const SHOW_ALL = TreeSelect.SHOW_ALL;
 const SHOW_CHILD = TreeSelect.SHOW_CHILD;
 
-class AddRoleWindow extends Component {
+class UpdateRoleWindow extends Component {
 
     constructor(props){
         super(props);
@@ -417,4 +417,4 @@ class AddRoleWindow extends Component {
     }
 }
 
-export default Form.create()(AddRoleWindow);
+export default Form.create()(UpdateRoleWindow);
