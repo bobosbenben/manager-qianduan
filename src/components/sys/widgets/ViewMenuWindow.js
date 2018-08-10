@@ -125,7 +125,7 @@ class ViewMenuWindow extends Component {
         };
 
         return(
-            <Spin spinning={this.state.loading} tip='正在修改...'>
+            <Spin spinning={this.state.loading} tip='正在获取或修改菜单数据...'>
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem label="上级菜单" {...formItemLayout}>
                         {getFieldDecorator('parentId', {
