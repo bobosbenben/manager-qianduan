@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import AddMenuWindow from './widgets/AddMenuWindow';
 import UpdateMenuWindow from './widgets/UpdateMenuWindow';
 import ViewMenuWindow from './widgets/ViewMenuWindow';
+import {wrapedFetch} from "../../utils/WrapedFetch";
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -65,31 +67,22 @@ class SysMenu extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/menu/get';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                id:0
-            }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    message.success(data.msg);
-                    this.ergodic(data);
-                    this.setState({
-                        treeData: data.children
-                    });
-                }
+
+        wrapedFetch('/sys/menu/get',{id:0})
+            .then(data=>{
+                this.ergodic(data);
                 this.setState({
-                    loading:false
+                    loading:false,
+                    treeData: data.children
                 });
-            });
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
     }
 
     componentDidMount(){
@@ -146,26 +139,23 @@ class SysMenu extends Component {
                         maskClosable: true,
                         content: '删除菜单将删除本菜单及其子菜单，确认删除?',
                         onOk: function () {
-                            let url = '/sys/menu/delete';
-                            fetch(url,{
-                                credentials: 'include',
-                                method: 'POST',
-                                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                                body: JSON.stringify({
-                                    data:[{id: that.state.currentSelectRow.id}]
-                                }),
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success === false ) {
-                                        message.error(data.msg);
-                                    }
-                                    if (data.success === true){
-                                        message.success(data.msg);
-                                        that.fetchData();
-                                        that.state.currentSelectRow = null;
-                                    }
-                                });
+                            wrapedFetch('/sys/menu/delete',{
+                                data:[{id: that.state.currentSelectRow.id}]
+                            },true,'删除菜单成功')
+                                .then(data=>{
+                                    that.setState({
+                                        loading:false,
+                                        currentSelectRow: null
+                                    });
+                                    that.fetchData();
+                                })
+                                .catch(ex => {
+                                    Modal.error({
+                                        title: '错误',
+                                        content: ex.message+',错误码：'+ex.code
+                                    })
+                                    that.setState({loading: false});
+                                })
                         }
                     })
                 }
@@ -278,7 +268,6 @@ class SysMenu extends Component {
 
 function mapStateToProps({ loggedUserState }) {
     return {
-        initialData: loggedUserState.initialData,
         currentMenuButton: loggedUserState.currentMenuButton
     }
 }

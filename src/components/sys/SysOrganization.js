@@ -5,6 +5,8 @@ import AddOrganizationWindow from './widgets/AddOrganizationWindow';
 import UpdateOrganizationWindow from './widgets/UpdateOrganizationWindow';
 import ViewOrganizationWindow from './widgets/ViewOrganizationWindow'
 import ReactDOM from "react-dom";
+import {wrapedFetch} from "../../utils/WrapedFetch";
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -65,29 +67,22 @@ class SysOrganization extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/organization/get';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({}),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    message.success(data.msg);
-                    this.ergodic(data);
-                    this.setState({
-                        treeData: data.children
-                    });
-                }
+
+        wrapedFetch('/sys/organization/get')
+            .then(data=>{
+                this.ergodic(data);
                 this.setState({
-                    loading:false
+                    loading:false,
+                    treeData: data.children
                 });
-            });
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
     }
 
     componentDidMount(){
@@ -152,26 +147,23 @@ class SysOrganization extends Component {
                         maskClosable: true,
                         content: '删除机构将删除本机构及其下级机构，确认删除?',
                         onOk: function () {
-                            let url = '/sys/organization/delete';
-                            fetch(url,{
-                                credentials: 'include',
-                                method: 'POST',
-                                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                                body: JSON.stringify({
-                                    data:[{id: that.state.currentSelectRow.id}]
-                                }),
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success === false ) {
-                                        message.error(data.msg);
-                                    }
-                                    if (data.success === true){
-                                        message.success(data.msg);
-                                        that.fetchData();
-                                        that.state.currentSelectRow = null;
-                                    }
-                                });
+                            wrapedFetch('/sys/organization/delete',{
+                                data:[{id: that.state.currentSelectRow.id}]
+                            },true,'删除机构成功')
+                                .then(data=>{
+                                    that.setState({
+                                        loading:false,
+                                        currentSelectRow: null
+                                    });
+                                    that.fetchData();
+                                })
+                                .catch(ex => {
+                                    Modal.error({
+                                        title: '错误',
+                                        content: ex.message+',错误码：'+ex.code
+                                    })
+                                    that.setState({loading: false});
+                                })
                         }
                     })
                 }
@@ -275,7 +267,6 @@ class SysOrganization extends Component {
 
 function mapStateToProps({ loggedUserState }) {
     return {
-        initialData: loggedUserState.initialData,
         currentMenuButton: loggedUserState.currentMenuButton
     }
 }

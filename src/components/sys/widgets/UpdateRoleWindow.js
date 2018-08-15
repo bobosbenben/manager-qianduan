@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, Checkbox, message, Spin, Select, TreeSelect } from 'antd';
+import { Form, Input, Button, Spin, Select, TreeSelect, Modal } from 'antd';
 import WrapedCheckBox from '../../../utils/WrapedCheckBox';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
@@ -38,57 +40,46 @@ class UpdateRoleWindow extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/menu/get';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({id:0}),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    this.setState({
-                        treeData: data.children
-                    });
-                    this.ergodicMenuTree(data.children[0]);
-                }
+
+        wrapedFetch('/sys/menu/get',{id:0})
+            .then(data=>{
                 this.setState({
-                    loading:false
+                    loading:false,
+                    treeData: data.children
                 });
-            });
+                this.ergodicMenuTree(data.children[0]);
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
+
         //如果选中的角色是“按明细设置”，那么需要获取机构树，用于表单中“机构范围”
         if (this.state.currentSelectRole.dataScope === 5){
             //请求机构树
             this.setState({
                 loading: true
             });
-            let url = '/sys/organization/get';
-            fetch(url,{
-                credentials: 'include',
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                body: JSON.stringify({}),
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success === false ) {
-                        message.error(data.msg);
-                    }
-                    if (data.success === true){
-                        this.ergodic(data);
-                        this.setState({
-                            organizationTreeData: data.children,
-                            organizationListItemDisabled:false
-                        });
-                    }
+
+            wrapedFetch('/sys/organization/get')
+                .then(data=>{
+                    this.ergodic(data);
                     this.setState({
-                        loading:false
+                        loading:false,
+                        organizationTreeData: data.children,
+                        organizationListItemDisabled:false
                     });
-                });
+                })
+                .catch(ex => {
+                    Modal.error({
+                        title: '错误',
+                        content: ex.message+',错误码：'+ex.code
+                    })
+                    this.setState({loading: false});
+                })
         }//if
     }
 
@@ -156,30 +147,23 @@ class UpdateRoleWindow extends Component {
             this.setState({
                 loading: true
             });
-            let url = '/sys/organization/get';
-            fetch(url,{
-                credentials: 'include',
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                body: JSON.stringify({}),
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success === false ) {
-                        message.error(data.msg);
-                    }
-                    if (data.success === true){
-                        message.success(data.msg);
-                        this.ergodic(data);
-                        this.setState({
-                            organizationTreeData: data.children,
-                            organizationListItemDisabled:false
-                        });
-                    }
+
+            wrapedFetch('/sys/organization/get')
+                .then(data=>{
+                    this.ergodic(data);
                     this.setState({
-                        loading:false
+                        loading:false,
+                        organizationTreeData: data.children,
+                        organizationListItemDisabled:false
                     });
-                });
+                })
+                .catch(ex => {
+                    Modal.error({
+                        title: '错误',
+                        content: ex.message+',错误码：'+ex.code
+                    })
+                    this.setState({loading: false});
+                })
         }
         else {
             this.setState({
@@ -222,38 +206,33 @@ class UpdateRoleWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/role/create';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            id: this.state.currentSelectRole.id,
-                            moduleId: values.moduleId,
-                            name: values.name,
-                            roleType: values.roleType,
-                            menuIdList: values.menuIdList,
-                            organizationIdList: values.organizationList,
-                            dataScope: values.dataScope,
-                            remarks: values.remarks,
-                            useable: this.state.useableChecked
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+
+                wrapedFetch('/sys/role/create',{
+                    data:[{
+                        id: this.state.currentSelectRole.id,
+                        moduleId: values.moduleId,
+                        name: values.name,
+                        roleType: values.roleType,
+                        menuIdList: values.menuIdList,
+                        organizationIdList: values.organizationList,
+                        dataScope: values.dataScope,
+                        remarks: values.remarks,
+                        useable: this.state.useableChecked
+                    }]
+                },true,'角色修改成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateModuleRolesData();
-                        }
-                    });
+                        this.updateModuleRolesData();
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }

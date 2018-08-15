@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, Select, TreeSelect, message, Spin } from 'antd';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+import { Form, Input, Button, Select, TreeSelect, Spin, Modal } from 'antd';
 const Option = Select.Option;
 const FormItem = Form.Item;
 
@@ -22,29 +23,23 @@ class UpdateMenuWindow extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/menu/getparentmenu';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                data:[{id:currentMenu.id}]
-            }),
+
+        wrapedFetch('/sys/menu/getparentmenu',{
+            data:[{id:currentMenu.id}]
         })
-            .then(res => res.json())
-            .then(data => {
+            .then(data=>{
                 this.setState({
-                    loading: false
+                    loading:false,
+                    currentMenuParentMenu:data.data
                 });
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    this.setState({
-                        currentMenuParentMenu:data.data
-                    });
-                }
-            });
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -59,39 +54,34 @@ class UpdateMenuWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/menu/update';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data: [{
-                            id: this.state.currentMenu.id,
-                            parentId: values.parentId,
-                            name: values.name,
-                            description: values.description,
-                            type: values.type,
-                            target: values.target,
-                            permission: values.permission,
-                            sort: values.sort,
-                            iconCls: values.iconCls,
-                            remarks: values.remarks
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+
+                wrapedFetch('/sys/menu/update',{
+                    data: [{
+                        id: this.state.currentMenu.id,
+                        parentId: values.parentId,
+                        name: values.name,
+                        description: values.description,
+                        type: values.type,
+                        target: values.target,
+                        permission: values.permission,
+                        sort: values.sort,
+                        iconCls: values.iconCls,
+                        remarks: values.remarks
+                    }]
+                },true,'菜单修改成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.props.updateMenuData();
-                        }
-                    });
+                        this.props.updateMenuData();
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }
@@ -236,11 +226,4 @@ class UpdateMenuWindow extends Component {
         )
     }
 }
-export default Form.create({
-    mapPropsToFields(props) {
-        return {
-            // accountNo: Form.createFormField({value: props.currentRow.accountNo}),
-            // principal: Form.createFormField({value: props.currentRow.principal})
-        };
-    },
-})(UpdateMenuWindow);
+export default Form.create()(UpdateMenuWindow);

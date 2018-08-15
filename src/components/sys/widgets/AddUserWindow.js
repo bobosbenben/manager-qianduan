@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, DatePicker, message, Spin, Select, TreeSelect, Row, Col } from 'antd';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+import { Form, Input, Button, DatePicker, Modal, Spin, Select, TreeSelect, Row, Col } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -28,41 +29,35 @@ class AddUserWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/user/create';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            userCode: values.userCode,
-                            userName: values.userName,
-                            organizationId: values.organizationId,
-                            userEntryDate: values.userEntryDate,
-                            userGender: values.userGender,
-                            userType: values.userType,
-                            userPost: values.userPost,
-                            userIdCard: values.userIdCard,
-                            userPhone: values.userPhone,
-                            userAddress: values.userAddress,
-                            remarks: values.remarks,
-                            isNewRecord: true
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                wrapedFetch('/sys/user/create',{
+                    data:[{
+                        userCode: values.userCode,
+                        userName: values.userName,
+                        organizationId: values.organizationId,
+                        userEntryDate: values.userEntryDate,
+                        userGender: values.userGender,
+                        userType: values.userType,
+                        userPost: values.userPost,
+                        userIdCard: values.userIdCard,
+                        userPhone: values.userPhone,
+                        userAddress: values.userAddress,
+                        remarks: values.remarks,
+                        isNewRecord: true
+                    }]
+                },true,'新增柜员成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateUserTable();
-                        }
-                    });
+                        this.updateUserTable();
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }

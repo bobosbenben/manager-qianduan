@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, TreeSelect, Input, Button, Checkbox, message, Spin, Select } from 'antd';
+import { Form, TreeSelect, Input, Button, Checkbox, message, Spin, Select, Modal } from 'antd';
+import {wrapedFetch} from '../../../utils/WrapedFetch';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -22,10 +23,6 @@ class AddOrganizationWindow extends Component {
         this.setState({parentOrganization: nextProps.parentOrganization});
     }
 
-    handleSelectChange=()=>{
-        // console.log('改变了菜单类型');
-    }
-
     updateOrganizationData = ()=>{
         this.props.updateOrganizationData();
     }
@@ -38,40 +35,32 @@ class AddOrganizationWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/organization/create';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            parentId: values.parentId,
-                            hzOrgCOde: values.hzOrgCOde,
-                            code: values.code,
-                            name: values.name,
-                            sort: values.sort,
-                            iconCls: values.iconCls,
-                            type: values.type,
-                            phone: values.phone,
-                            address: values.address,
-                            useable: this.state.useableChecked,
-                            isNewRecord: true
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        this.setState({
-                            loading: false
-                        });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateOrganizationData();
-                        }
-                    });
+                wrapedFetch('/sys/organization/create',{
+                    data:[{
+                        parentId: values.parentId,
+                        hzOrgCOde: values.hzOrgCOde,
+                        code: values.code,
+                        name: values.name,
+                        sort: values.sort,
+                        iconCls: values.iconCls,
+                        type: values.type,
+                        phone: values.phone,
+                        address: values.address,
+                        useable: this.state.useableChecked,
+                        isNewRecord: true
+                    }]
+                },true,'新增机构成功')
+                    .then(data=>{
+                        this.updateOrganizationData();
+                        this.setState({loading:false});
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }
@@ -162,7 +151,7 @@ class AddOrganizationWindow extends Component {
                                 required:true,message:'请输入机构类型'
                             }]
                         })(
-                            <Select placeholder="选择机构类型" onChange={this.handleSelectChange}>
+                            <Select placeholder="选择机构类型">
                                 <Option value="104">支行</Option>
                                 <Option value="201">管理部门</Option>
                                 <Option value="0">公司/企业</Option>

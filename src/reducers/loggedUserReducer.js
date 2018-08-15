@@ -1,6 +1,5 @@
 const initialState = {
     pending: true,
-    getInitialDataing:false,
     logged: false,
     initialData: null,
     currentMenuButton: null
@@ -38,12 +37,6 @@ const loggedUserReducer = (state = initialState, action) => {
         }
     }
 
-    // if (action.type === 'SET_GET_INITIAL_DATA_FINISHED'){
-    //     return {
-    //         getInitialDataing: false,
-    //         initialData: action.data
-    //     }
-    // }
 
     return state;
 }

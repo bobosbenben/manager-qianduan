@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, message, Spin, Radio, TreeSelect, Select } from 'antd';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+import { Form, Input, Button, Modal, Spin, Radio, TreeSelect, Select } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -33,35 +34,30 @@ class AlterUserOrganizationWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/user/alterOrganization';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            oldId: this.state.currentSelectUser.id,
-                            userId: this.state.currentSelectUser.userId,
-                            organizationId: values.organizationId,
-                            operationType: values.operationType,
-                            status: values.status,
-                            remarks: values.remarks
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+
+                wrapedFetch('/sys/user/alterOrganization',{
+                    data:[{
+                        oldId: this.state.currentSelectUser.id,
+                        userId: this.state.currentSelectUser.userId,
+                        organizationId: values.organizationId,
+                        operationType: values.operationType,
+                        status: values.status,
+                        remarks: values.remarks
+                    }]
+                },true,'柜员调动成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateUserTable();
-                        }
-                    });
+                        this.updateUserTable();
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }

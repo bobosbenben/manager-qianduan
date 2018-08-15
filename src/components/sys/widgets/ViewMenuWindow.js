@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, Select, TreeSelect, message, Spin } from 'antd';
+import { Form, Input, Button, Select, TreeSelect, Spin, Modal } from 'antd';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+
 const Option = Select.Option;
 const FormItem = Form.Item;
 
@@ -22,78 +24,25 @@ class ViewMenuWindow extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/menu/getparentmenu';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                data:[{id:currentMenu.id}]
-            }),
-        })
-            .then(res => res.json())
-            .then(data => {
+
+        wrapedFetch('/sys/menu/getparentmenu',{data:[{id:currentMenu.id}]})
+            .then(data=>{
                 this.setState({
-                    loading: false
+                    loading:false,
+                    currentMenuParentMenu:data.data
                 });
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    this.setState({
-                        currentMenuParentMenu:data.data
-                    });
-                }
-            });
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log('props更新'); console.log(nextProps.currentMenu);
         this.setState({currentMenu: nextProps.currentMenu});
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.setState({
-                    loading: true
-                });
-                let url = '/sys/menu/update';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data: [{
-                            id: this.state.currentMenu.id,
-                            parentId: values.parentId,
-                            name: values.name,
-                            description: values.description,
-                            type: values.type,
-                            target: values.target,
-                            permission: values.permission,
-                            sort: values.sort,
-                            iconCls: values.iconCls,
-                            remarks: values.remarks
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        this.setState({
-                            loading: false
-                        });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.props.updateMenuData();
-                        }
-                    });
-            }
-        });
     }
 
     render(){
@@ -126,7 +75,7 @@ class ViewMenuWindow extends Component {
 
         return(
             <Spin spinning={this.state.loading} tip='正在获取或修改菜单数据...'>
-                <Form onSubmit={this.handleSubmit}>
+                <Form>
                     <FormItem label="上级菜单" {...formItemLayout}>
                         {getFieldDecorator('parentId', {
                             rules:[{

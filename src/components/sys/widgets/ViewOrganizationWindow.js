@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Form, TreeSelect, Input, Button, Checkbox, message, Spin, Select } from 'antd';
+import { Form, TreeSelect, Input, Button, Spin, Select } from 'antd';
 import WrapedCheckBox from '../../../utils/WrapedCheckBox';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -23,58 +23,8 @@ class ViewOrganizationWindow extends Component {
         this.setState({currentOrganization: nextProps.currentOrganization});
     }
 
-    handleSelectChange=()=>{
-        // console.log('改变了菜单类型');
-    }
-
     updateOrganizationData = ()=>{
         this.props.updateOrganizationData();
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-
-                this.setState({
-                    loading: true
-                });
-                let url = '/sys/organization/update';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            id: this.state.currentOrganization.id,
-                            parentId: values.parentId,
-                            hzOrgCOde: values.hzOrgCOde,
-                            code: values.code,
-                            name: values.name,
-                            sort: values.sort,
-                            iconCls: values.iconCls,
-                            type: values.type,
-                            phone: values.phone,
-                            address: values.address,
-                            useable: this.state.useableChecked
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        this.setState({
-                            loading: false
-                        });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateOrganizationData();
-                        }
-                    });
-            }
-        });
     }
 
     onUseableCheckedChange = (e)=>{
@@ -112,7 +62,7 @@ class ViewOrganizationWindow extends Component {
 
         return(
             <Spin spinning={this.state.loading} tip='正在新增...'>
-                <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+                <Form className="login-form">
                     <FormItem label="上级机构" {...formItemLayout}>
                         {getFieldDecorator('parentId', {
                             rules:[{

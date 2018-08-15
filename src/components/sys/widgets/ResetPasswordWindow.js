@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, message, Spin } from 'antd';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+import { Form, Input, Button, Spin, Modal } from 'antd';
 const FormItem = Form.Item;
 
 class ResetPasswordWindow extends Component {
@@ -21,32 +22,26 @@ class ResetPasswordWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/user/resetPassword';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            id: this.state.currentSelectUser.id,
-                            userId: this.state.currentSelectUser.userId,
-                            userNewLoginPassword: values.userNewLoginPassword,
-                            isNewRecord: false
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                wrapedFetch('/sys/user/resetPassword',{
+                    data:[{
+                        id: this.state.currentSelectUser.id,
+                        userId: this.state.currentSelectUser.userId,
+                        userNewLoginPassword: values.userNewLoginPassword,
+                        isNewRecord: false
+                    }]
+                },true,'重置柜员密码成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                        }
-                    });
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }

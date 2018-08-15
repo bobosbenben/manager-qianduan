@@ -204,7 +204,7 @@ class SysUser extends Component {
             organizationId: organizationId,
             limit: this.state.pageSize,
             ...params
-        })
+        },true,'获取用户数据成功')
             .then(data=>{
                 const pagination = {...this.state.pagination};
                 pagination.pageSize = this.state.pageSize;
@@ -225,39 +225,6 @@ class SysUser extends Component {
                 })
                 this.setState({loading: false});
             })
-        // let url = '/sys/user/get';
-        // fetch(url,{
-        //     credentials: 'include',
-        //     method: 'POST',
-        //     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-        //     body: JSON.stringify({
-        //         organizationId: organizationId,
-        //         limit: this.state.pageSize,
-        //         ...params
-        //     }),
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.success === false ) {
-        //             message.error(data.msg);
-        //         }
-        //         if (data.success === true){
-        //             message.success(data.msg);
-        //             const pagination = {...this.state.pagination};
-        //             pagination.pageSize = this.state.pageSize;
-        //             if(this.state.flag) pagination.current = 1;
-        //             pagination.total = data.total;
-        //             this.setState({
-        //                 flag: false,
-        //                 currentOrganizationUsers: data.data,
-        //                 pagination
-        //             });
-        //             this.updateCurrentSelectUser();
-        //         }
-        //         this.setState({
-        //             loading: false
-        //         })
-        //     });
     }
 
     componentDidMount(){
@@ -265,29 +232,22 @@ class SysUser extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/organization/get';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({}),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    this.ergodic(data);
-                    this.setState({
-                        organizationTreeData: data.children
-                    });
-                }
+
+        wrapedFetch('/sys/organization/get')
+            .then(data=>{
+                this.ergodic(data);
                 this.setState({
+                    organizationTreeData: data.children,
                     loading:false
                 });
-            });
-
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
         this.fetchData({
             start: 0,
             page: 1
@@ -362,30 +322,23 @@ class SysUser extends Component {
                         maskClosable: true,
                         content: '确认删除用户“'+that.state.currentSelectRow.userName+'”?',
                         onOk: function () {
-                            let url = '/sys/user/delete';
-                            fetch(url,{
-                                credentials: 'include',
-                                method: 'POST',
-                                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                                body: JSON.stringify({
-                                    data:[{userId: that.state.currentSelectRow.userId}]
-                                }),
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success === false ) {
-                                        message.error(data.msg);
-                                    }
-                                    if (data.success === true){
-                                        message.success(data.msg);
-                                        that.setState({flag:true});
-                                        that.fetchData({
-                                            start: 0,
-                                            page: 1
-                                        });
-                                        that.state.currentSelectRow = null;
-                                    }
-                                });
+                            wrapedFetch('/sys/user/delete',{
+                                data:[{userId: that.state.currentSelectRow.userId}]
+                            },true,'删除用户成功')
+                                .then(data=>{
+                                    that.setState({flag:true});
+                                    that.fetchData({
+                                        start: 0,
+                                        page: 1
+                                    });
+                                    that.state.currentSelectRow = null;
+                                })
+                                .catch(ex => {
+                                    Modal.error({
+                                        title: '错误',
+                                        content: ex.message+',错误码：'+ex.code
+                                    })
+                                })
                         },
                     })
                 }
@@ -592,7 +545,6 @@ class SysUser extends Component {
 
 function mapStateToProps({ loggedUserState }) {
     return {
-        initialData: loggedUserState.initialData,
         currentMenuButton: loggedUserState.currentMenuButton
     }
 }

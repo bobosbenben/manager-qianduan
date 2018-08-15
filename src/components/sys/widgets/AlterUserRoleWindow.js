@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Form, Input, Button, message, Spin, Table, Modal } from 'antd';
+import { Form, Input, Button, Spin, Table, Modal } from 'antd';
 import {wrapedFetch} from '../../../utils/WrapedFetch';
 import '../css/sys.css';
 const FormItem = Form.Item;
@@ -80,33 +80,6 @@ class AlterUserRoleWindow extends Component {
                         })
                         this.setState({loading: false});
                     })
-                // let url = '/sys/user/updateRole';
-                // fetch(url,{
-                //     credentials: 'include',
-                //     method: 'POST',
-                //     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                //     body: JSON.stringify({
-                //         data:[{
-                //             id: this.state.currentSelectUser.id,
-                //             userId: this.state.currentSelectUser.userId,
-                //             userRoleIdList:this.state.selectedRoleIdList,
-                //             isNewRecord: false
-                //         }]
-                //     }),
-                // })
-                //     .then(res => res.json())
-                //     .then(data => {
-                //         this.setState({
-                //             loading: false
-                //         });
-                //         if (data.success === false ) {
-                //             message.error(data.msg);
-                //         }
-                //         if (data.success === true){
-                //             message.success(data.msg);
-                //             this.updateUserTable();
-                //         }
-                //     });
             }
         });
     }

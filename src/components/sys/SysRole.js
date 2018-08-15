@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import AddRoleWindow from './widgets/AddRoleWindow';
 import UpdateRoleWindow from './widgets/UpdateRoleWindow';
 import ViewRoleWindow from './widgets/ViewRoleWindow';
+import {wrapedFetch} from "../../utils/WrapedFetch";
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -81,33 +83,26 @@ class SysRole extends Component {
         this.setState({
             loading: true
         });
-        let url = '/sys/role/moduleroles';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                data:[{
-                    moduleId: currentModule.id
-                }]
-            }),
+
+        wrapedFetch('/sys/role/moduleroles',{
+            data:[{
+                moduleId: currentModule.id
+            }]
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    message.success(data.msg);
-                    this.setState({
-                        currentModuleRoles: data.data
-                    });
-                    that.updateCurrentSelectRole();
-                }
+            .then(data=>{
                 this.setState({
-                    loading:false
+                    loading:false,
+                    currentModuleRoles: data.data
                 });
-            });
+                that.updateCurrentSelectRole();
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
     }
 
     /**
@@ -171,26 +166,21 @@ class SysRole extends Component {
                         maskClosable: true,
                         content: '确认删除角色“'+that.state.currentSelectRow.name+'”?',
                         onOk: function () {
-                            let url = '/sys/role/delete';
-                            fetch(url,{
-                                credentials: 'include',
-                                method: 'POST',
-                                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                                body: JSON.stringify({
-                                    data:[{id: that.state.currentSelectRow.id}]
-                                }),
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success === false ) {
-                                        message.error(data.msg);
-                                    }
-                                    if (data.success === true){
-                                        message.success(data.msg);
-                                        that.fetchData();
-                                        that.state.currentSelectRow = null;
-                                    }
-                                });
+                            wrapedFetch('/sys/role/delete',{data:[{id: that.state.currentSelectRow.id}]},true,'删除角色成功')
+                                .then(data=>{
+                                    that.setState({
+                                        loading:false,
+                                        currentSelectRow: null
+                                    });
+                                    that.fetchData();
+                                })
+                                .catch(ex => {
+                                    Modal.error({
+                                        title: '错误',
+                                        content: ex.message+',错误码：'+ex.code
+                                    })
+                                    that.setState({loading: false});
+                                })
                         },
                     })
                 }
@@ -257,32 +247,25 @@ class SysRole extends Component {
             this.setState({
                 loading: true
             });
-            let url = '/sys/role/moduleroles';
-            fetch(url,{
-                credentials: 'include',
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                body: JSON.stringify({
-                    data:[{
-                        moduleId: currentModule.id
-                    }]
-                }),
+
+            wrapedFetch('/sys/role/moduleroles',{
+                data:[{
+                    moduleId: currentModule.id
+                }]
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success === false ) {
-                        message.error(data.msg);
-                    }
-                    if (data.success === true){
-                        message.success(data.msg);
-                        this.setState({
-                            currentModuleRoles: data.data
-                        });
-                    }
+                .then(data=>{
                     this.setState({
-                        loading:false
+                        loading:false,
+                        currentModuleRoles: data.data
                     });
-                });
+                })
+                .catch(ex => {
+                    Modal.error({
+                        title: '错误',
+                        content: ex.message+',错误码：'+ex.code
+                    })
+                    this.setState({loading: false});
+                })
         }
     }
 
@@ -366,7 +349,6 @@ class SysRole extends Component {
 
 function mapStateToProps({ loggedUserState }) {
     return {
-        initialData: loggedUserState.initialData,
         currentMenuButton: loggedUserState.currentMenuButton
     }
 }

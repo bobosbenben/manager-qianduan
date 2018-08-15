@@ -10,7 +10,7 @@ import {
     Alert
 } from 'antd';
 import './loginwindow.css';
-import {login,getInitialData} from '../../utils/xhr';
+import {login} from '../../utils/xhr';
 const FormItem = Form.Item;
 
 class LoginWindow extends Component {

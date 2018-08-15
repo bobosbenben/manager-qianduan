@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
-import { Form, TreeSelect, Input, Button, Checkbox, message, Spin, Select } from 'antd';
+import { Form, TreeSelect, Input, Button, Modal, Spin, Select } from 'antd';
 import WrapedCheckBox from '../../../utils/WrapedCheckBox';
+import {wrapedFetch} from "../../../utils/WrapedFetch";
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -39,40 +41,34 @@ class UpdateOrganizationWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/organization/update';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            id: this.state.currentOrganization.id,
-                            parentId: values.parentId,
-                            hzOrgCOde: values.hzOrgCOde,
-                            code: values.code,
-                            name: values.name,
-                            sort: values.sort,
-                            iconCls: values.iconCls,
-                            type: values.type,
-                            phone: values.phone,
-                            address: values.address,
-                            useable: this.state.useableChecked
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                wrapedFetch('/sys/organization/update',{
+                    data:[{
+                        id: this.state.currentOrganization.id,
+                        parentId: values.parentId,
+                        hzOrgCOde: values.hzOrgCOde,
+                        code: values.code,
+                        name: values.name,
+                        sort: values.sort,
+                        iconCls: values.iconCls,
+                        type: values.type,
+                        phone: values.phone,
+                        address: values.address,
+                        useable: this.state.useableChecked
+                    }]
+                },true,'机构修改成功')
+                    .then(data=>{
                         this.setState({
-                            loading: false
+                            loading:false
                         });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateOrganizationData();
-                        }
-                    });
+                        this.updateOrganizationData();
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }

@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import { Form, Icon, Input, Button, Checkbox, message, Spin, Select } from 'antd';
+import { Form, Input, Button, Spin, Select, Modal } from 'antd';
+import {wrapedFetch} from '../../../utils/WrapedFetch';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -39,40 +40,33 @@ class AddMenuWindow extends Component {
                 this.setState({
                     loading: true
                 });
-                let url = '/sys/menu/create';
-                fetch(url,{
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                    body: JSON.stringify({
-                        data:[{
-                            parentId: that.state.record.id,
-                            name: values.name,
-                            sort: values.sort,
-                            type: values.type,
-                            target: values.target,
-                            iconCls: values.iconCls,
-                            permission: values.permission,
-                            description: values.description,
-                            remarks: values.remarks,
-                            isShow: '1',
-                            isNewRecord: true
-                        }]
-                    }),
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        this.setState({
-                            loading: false
-                        });
-                        if (data.success === false ) {
-                            message.error(data.msg);
-                        }
-                        if (data.success === true){
-                            message.success(data.msg);
-                            this.updateMenuData();
-                        }
-                    });
+
+                wrapedFetch('/sys/menu/create',{
+                    data:[{
+                        parentId: that.state.record.id,
+                        name: values.name,
+                        sort: values.sort,
+                        type: values.type,
+                        target: values.target,
+                        iconCls: values.iconCls,
+                        permission: values.permission,
+                        description: values.description,
+                        remarks: values.remarks,
+                        isShow: '1',
+                        isNewRecord: true
+                    }]
+                },true,'新增菜单成功')
+                    .then(()=>{
+                        this.updateMenuData();
+                        this.setState({loading:false});
+                    })
+                    .catch(ex => {
+                        Modal.error({
+                            title: '错误',
+                            content: ex.message+',错误码：'+ex.code
+                        })
+                        this.setState({loading: false});
+                    })
             }
         });
     }
