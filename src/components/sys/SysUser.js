@@ -1,56 +1,156 @@
 import React,{Component} from 'react';
-import { Table, Button, Modal, message, Card, Col, Row, Tree, Layout } from 'antd';
+import { Table, Button, Modal, message, Card, Col, Row, Tree, Pagination } from 'antd';
 import {connect} from 'react-redux';
-import AddRoleWindow from './widgets/AddRoleWindow';
-import UpdateRoleWindow from './widgets/UpdateRoleWindow';
-import ViewRoleWindow from './widgets/ViewRoleWindow';
+import AddUserWindow from './widgets/AddUserWindow';
+import UpdateUserWindow from './widgets/UpdateUserWindow';
+import ResetPasswordWindow from './widgets/ResetPasswordWindow'
+import AlterUserOrganizationWindow from './widgets/AlterUserOrganizationWindow';
+import AlterUserRoleWindow from './widgets/AlterUserRoleWindow';
+import ReactDOM from "react-dom";
+import {wrapedFetch} from '../../utils/WrapedFetch';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-const {Content} = Layout;
 const TreeNode = Tree.TreeNode;
 const columns = [{
-    title: '名称',
-    dataIndex: 'name',
-    key: 'name',
-    width: '20%'
-}, {
-    title: '角色类型',
-    dataIndex: 'roleType',
-    key: 'roleType',
-    width: '20%',
-    render: (text, record) => {
-        switch(text){
-            case 'management': return '管理角色';
-            case 'user': return '普通角色';
-            default: return '无法识别的角色类型';
+    title: '用户信息',
+    children: [{
+        title: '柜员号',
+        dataIndex: 'userCode',
+        key: 'userCode',
+        width: '4%',
+        align: 'center'
+    }, {
+        title: '姓名',
+        dataIndex: 'userName',
+        key: 'userName',
+        width: '4%',
+        align: 'center'
+    },{
+        title: '性别',
+        dataIndex: 'userGender',
+        key: 'userGender',
+        width: '2%',
+        align: 'center'
+    },{
+        title: '入职日期',
+        dataIndex: 'userEntryDate',
+        key: 'userEntryDate',
+        width: '5%',
+        align: 'center'
+    },{
+        title: '职务',
+        dataIndex: 'userPost',
+        key: 'userPost',
+        width: '5%',
+        align: 'center'
+    },{
+        title: '身份证号',
+        dataIndex: 'userIdCard',
+        key: 'userIdCard',
+        width: '3%',
+        align: 'center'
+    },{
+        title: '电话',
+        dataIndex: 'userPhone',
+        key: 'userPhone',
+        width: '3%',
+        align: 'center'
+    },{
+        title: '创建时间',
+        dataIndex: 'userCreateTime',
+        key: 'userCreateTime',
+        width: '6%',
+        align: 'center'
+    },{
+        title: '更新时间',
+        dataIndex: 'userUpdateTime',
+        key: 'userUpdateTime',
+        width: '6%',
+        align: 'center'
+    },{
+        title: '拥有的角色',
+        dataIndex: 'userRoleNames',
+        key: 'userRoleNames',
+        width: '15%',
+        align: 'center'
+    }]
+},{
+    title: '机构信息',
+    children: [{
+        title: '机构编号',
+        dataIndex: 'organizationCode',
+        key: 'organizationCode',
+        width: '3%',
+        align: 'center'
+    },{
+        title: '机构',
+        dataIndex: 'organizationName',
+        key: 'organizationName',
+        width: '6%',
+        align: 'center',
+        render:(text)=>{
+            return <span style={{color:'#40a9ff', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', display:'inline-block', width:200}}>{text}</span>
         }
-    }
+    },{
+        title: '状态',
+        dataIndex: 'statusStr',
+        key: 'statusStr',
+        width: '2%',
+        align: 'center'
+    },{
+        title: '调入日期',
+        dataIndex: 'startDate',
+        key: 'startDate',
+        width: '5%',
+        align: 'center'
+    },{
+        title: '调出日期',
+        dataIndex: 'endDate',
+        key: 'endDate',
+        width: '5%',
+        align: 'center'
+    },{
+        title: '创建时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
+        width: '6%',
+        align: 'center'
+    },{
+        title: '更新时间',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+        width: '6%',
+        align: 'center'
+    }]
 },{
-    title: '数据范围',
-    dataIndex: 'dataScopeStr',
-    key: 'dataScopeStr',
-    width: '15%'
-},{
-    title: '是否启用',
-    dataIndex: 'useable',
-    width: '15%',
-    render: (text, record)=>{
-        switch (text){
-            case true: return '是';
-            default: return '否';
+    title: '登录信息',
+    children: [,{
+        title: '是否可以登录',
+        dataIndex:'userLoginUseable',
+        key: 'userLoginUseable',
+        width: '3%',
+        align: 'center',
+        render:(text,record)=>{
+            switch (text){
+                case true: return '是';
+                case false: return '否';
+                default : return '无法识别的状态'
+            }
         }
-    }
-},{
-    title: '备注',
-    dataIndex: 'remarks',
-    key: 'remarks',
-    width: '15%'
-},{
-    title: '创建时间',
-    dataIndex: 'createTime',
-    key: 'createTime',
-    width: '15%'
+    },{
+        title: '登录IP',
+        dataIndex: 'userLoginIp',
+        key: 'userLoginIp',
+        width: '6%',
+        align: 'center'
+    },{
+        title: '登录时间',
+        dataIndex: 'userLoginTime',
+        key: 'userLoginTime',
+        width: '5%',
+        align: 'center'
+    }]
 }];
 
 class SysUser extends Component {
@@ -60,73 +160,108 @@ class SysUser extends Component {
 
         this.state = {
             loading: false,                 //是否正在后台加载数据
-            currentModuleRoles: [],         //单个module的所有角色
-            treeData: [],                   //菜单树数据
+            currentOrganizationUsers: [],   //单个机构的所有用户
             organizationTreeData: [],       //机构树数据
-            currentSelectRow: null,         //table中当前选中的角色
-            addRoleModalVisible: false,
-            updateRoleModalVisible: false,
-            viewRoleModalVisible: false,
-            currentSelectModule: null,
+            currentSelectRow: null,         //table中当前选中的用户user
+            addUserModalVisible: false,
+            updateUserModalVisible: false,
+            resetPasswordModalVisible:false,
+            alterUserOrganizationModalVisible: false,
+            alterRoleModalVisible: false,
+            currentSelectOrganization: null, //当前选中的机构
+            tableHeight: 0,                  //屏幕高度，用于动态调整屏幕高度
+            pagination: {},                  //分页条件
+            pageSize: 30,                    //单页条数
+            flag: false                      //是否将页数置为1的flag，如果为true，将页数改为1
         };
 
         this.event= this.event.bind(this);
+        this.fetchData = this.fetchData.bind(this);
     }
 
-    /**
-     * 更新表格，当新增、修改、删除菜单后更新table
-     */
-    fetchData = ()=> {
-        var that = this;
-        if (this.state.currentSelectModule === null) return;
-        let currentModule = this.state.currentSelectModule;
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        this.fetchData({
+            limit: pagination.pageSize,
+            page: pagination.current,
+            start: (pagination.current - 1) * pagination.pageSize
+        });
+    }
+
+    fetchData = (params = {}) => {
         this.setState({
             loading: true
         });
-        let url = '/sys/role/moduleroles';
-        fetch(url,{
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                data:[{
-                    moduleId: currentModule.id
-                }]
-            }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success === false ) {
-                    message.error(data.msg);
-                }
-                if (data.success === true){
-                    message.success(data.msg);
-                    this.setState({
-                        currentModuleRoles: data.data
-                    });
-                    that.updateCurrentSelectRole();
-                }
-                this.setState({
-                    loading:false
-                });
-            });
-    }
 
-    /**
-     * 当table中数据更新后，更新当前选中的currentSelectRole（否则table中的数据已更新，但是state中的currentSelectRow任然保持修改之前的值）
-     */
-    updateCurrentSelectRole=()=>{
-        let currentModuleRoles = this.state.currentModuleRoles;
-        for(var i=0;i<currentModuleRoles.length;i++){
-            if (this.state.currentSelectRow!=null && this.state.currentSelectRow.id == currentModuleRoles[i].id)
+        let organizationId = null;
+        if (this.state.currentSelectOrganization !== null && this.state.currentSelectOrganization !== undefined) organizationId = this.state.currentSelectOrganization.id;
+
+        wrapedFetch('/sys/user/get',{
+            organizationId: organizationId,
+            limit: this.state.pageSize,
+            ...params
+        })
+            .then(data=>{
+                const pagination = {...this.state.pagination};
+                pagination.pageSize = this.state.pageSize;
+                if(this.state.flag) pagination.current = 1;
+                pagination.total = data.total;
                 this.setState({
-                    currentSelectRow: currentModuleRoles[i]
+                    loading:false,
+                    flag: false,
+                    currentOrganizationUsers: data.data,
+                    pagination
                 });
-        }
+                this.updateCurrentSelectUser();
+            })
+            .catch(ex => {
+                Modal.error({
+                    title: '错误',
+                    content: ex.message+',错误码：'+ex.code
+                })
+                this.setState({loading: false});
+            })
+        // let url = '/sys/user/get';
+        // fetch(url,{
+        //     credentials: 'include',
+        //     method: 'POST',
+        //     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
+        //     body: JSON.stringify({
+        //         organizationId: organizationId,
+        //         limit: this.state.pageSize,
+        //         ...params
+        //     }),
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if (data.success === false ) {
+        //             message.error(data.msg);
+        //         }
+        //         if (data.success === true){
+        //             message.success(data.msg);
+        //             const pagination = {...this.state.pagination};
+        //             pagination.pageSize = this.state.pageSize;
+        //             if(this.state.flag) pagination.current = 1;
+        //             pagination.total = data.total;
+        //             this.setState({
+        //                 flag: false,
+        //                 currentOrganizationUsers: data.data,
+        //                 pagination
+        //             });
+        //             this.updateCurrentSelectUser();
+        //         }
+        //         this.setState({
+        //             loading: false
+        //         })
+        //     });
     }
 
     componentDidMount(){
-        //请求机构树
+        //请求机构树，用于表单的“入职机构”项
         this.setState({
             loading: true
         });
@@ -148,11 +283,33 @@ class SysUser extends Component {
                         organizationTreeData: data.children
                     });
                 }
-                console.log('organizationTreeData:'); console.log(this.state.organizationTreeData);
                 this.setState({
                     loading:false
                 });
             });
+
+        this.fetchData({
+            start: 0,
+            page: 1
+        });
+        this.tableRef();
+        window.addEventListener('resize',this.tableRef); //添加屏幕高度监听器
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('resize',this.tableRef) //移除屏幕高度监听器
+    }
+
+    /**
+     * 获得table的父组件的屏幕高度
+     */
+    tableRef = ()=>{
+        let table = ReactDOM.findDOMNode(this.refs.tableRef);
+        if (table !== null && table !== undefined){
+            var clientHeight = table.clientHeight;
+            if(clientHeight>170) clientHeight = clientHeight - 170; //120是按钮和其他pading占用的高度
+            this.setState({tableHeight:clientHeight})
+        }
     }
 
     /**
@@ -172,32 +329,46 @@ class SysUser extends Component {
         }
     }
 
+    /**
+     * 当table中数据更新后，更新当前选中的currentSelectRole（否则table中的数据已更新，但是state中的currentSelectRow任然保持修改之前的值）
+     */
+    updateCurrentSelectUser=()=>{
+        let currentUsers = this.state.currentOrganizationUsers;
+        for(let i=0;i<currentUsers.length;i++){
+            if (this.state.currentSelectRow!=null && this.state.currentSelectRow.id == currentUsers[i].id)
+                this.setState({
+                    currentSelectRow: currentUsers[i]
+                });
+        }
+    }
+
     event = (menuName)=>{
         var that = this;
         switch(menuName) {
-            case 'addRole':
+            case 'addUser':
                 return function () {
-                    that.setState({addRoleModalVisible:true});
+                    that.setState({addUserModalVisible:true});
                 }
-            case 'deleteRole':
+            case 'deleteUser':
                 return function () {
                     if(that.state.currentSelectRow == null){
-                        message.error('请选中将要删除的角色');
+                        message.error('请选中将要删除的用户');
                         return;
                     }
+                    console.log('currentSelectRow'); console.log(that.state.currentSelectRow);
                     Modal.warning({
                         title: '警告',
                         okText: '确认',
                         maskClosable: true,
-                        content: '确认删除角色“'+that.state.currentSelectRow.name+'”?',
+                        content: '确认删除用户“'+that.state.currentSelectRow.userName+'”?',
                         onOk: function () {
-                            let url = '/sys/role/delete';
+                            let url = '/sys/user/delete';
                             fetch(url,{
                                 credentials: 'include',
                                 method: 'POST',
                                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
                                 body: JSON.stringify({
-                                    data:[{id: that.state.currentSelectRow.id}]
+                                    data:[{userId: that.state.currentSelectRow.userId}]
                                 }),
                             })
                                 .then(res => res.json())
@@ -207,28 +378,48 @@ class SysUser extends Component {
                                     }
                                     if (data.success === true){
                                         message.success(data.msg);
-                                        that.fetchData();
+                                        that.setState({flag:true});
+                                        that.fetchData({
+                                            start: 0,
+                                            page: 1
+                                        });
                                         that.state.currentSelectRow = null;
                                     }
                                 });
                         },
                     })
                 }
-            case 'editRole':
+            case 'editUser':
                 return function () {
                     if(that.state.currentSelectRow == null){
-                        message.error('请选中将要修改的角色');
+                        message.error('请选中将要修改的用户');
                         return;
                     }
-                    that.setState({updateRoleModalVisible:true});
+                    that.setState({updateUserModalVisible:true});
                 }
-            case 'viewRole':
+            case 'resetPassword':
                 return function () {
                     if(that.state.currentSelectRow == null){
-                        message.error('请选中将要查看的角色');
+                        message.error('请选中将要重置密码的用户');
                         return;
                     }
-                    that.setState({viewRoleModalVisible:true});
+                    that.setState({resetPasswordModalVisible:true});
+                }
+            case 'alterOrganization':
+                return function () {
+                    if (that.state.currentSelectRow == null) {
+                        message.error('请选中将要重置密码的用户');
+                        return;
+                    }
+                    that.setState({alterUserOrganizationModalVisible:true});
+                }
+            case 'alterRole':
+                return function () {
+                    if(that.state.currentSelectRow == null){
+                        message.error('请选中将要修改角色的柜员');
+                        return;
+                    }
+                    that.setState({alterRoleModalVisible:true});
                 }
             default:
                 return function () {
@@ -239,9 +430,11 @@ class SysUser extends Component {
 
     hideModal = ()=>{
         this.setState({
-            addRoleModalVisible: false,
-            updateRoleModalVisible: false,
-            viewRoleModalVisible: false
+            addUserModalVisible: false,
+            updateUserModalVisible: false,
+            resetPasswordModalVisible: false,
+            alterUserOrganizationModalVisible: false,
+            alterRoleModalVisible: false
         });
     }
 
@@ -263,47 +456,33 @@ class SysUser extends Component {
     }
 
     /**
-     * 选中一个系统模块后，加载该模块的所有角色
+     * 选中一个机构后，加载该机构的所有用户
      * @param selectedKeys
      * @param info
      */
-    onTreeSelect = (selectedKeys,info)=>{
+    onOrganizationTreeSelect = (selectedKeys,info)=>{
         if (info.selectedNodes.length>0){
-            let currentModule = info.selectedNodes[0].props.dataRef;
+            let currentSelectOrganization = info.selectedNodes[0].props.dataRef;
             this.setState({
-                currentSelectModule: currentModule
+                currentSelectOrganization: currentSelectOrganization
             });
             //在左边树中选中一条模块菜单后，获取该模块菜单的所有角色，并将结果显示在table中
-            this.setState({
-                loading: true
+            this.fetchData({
+                start:0,
+                page:1
             });
-            let url = '/sys/role/moduleroles';
-            fetch(url,{
-                credentials: 'include',
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-                body: JSON.stringify({
-                    data:[{
-                        moduleId: currentModule.id
-                    }]
-                }),
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success === false ) {
-                        message.error(data.msg);
-                    }
-                    if (data.success === true){
-                        message.success(data.msg);
-                        this.setState({
-                            currentModuleRoles: data.data
-                        });
-                    }
-                    this.setState({
-                        loading:false
-                    });
-                });
         }
+    }
+
+    /**
+     * 刷新table，当更新、修改、删除表格中的数据后需要刷新表格中的数据
+     */
+    refreshColumn = ()=>{
+        this.setState({flag:true});
+        this.fetchData({
+            start: 0,
+            page: 1
+        })
     }
 
     render(){
@@ -320,13 +499,12 @@ class SysUser extends Component {
         };
 
         return(
-            <div style={{overflow:'auto',height:'100%',backgroundColor:'blue'}}>
-
-                <div style={{ background: '#ECECEC', padding: '10px',height:'100%'}}>
-                    <Row gutter={16} style={{height:'100%'}}>
+            <div style={{overflow:'auto',height:'100%'}}>
+                <div style={{ background: '#ECECEC', padding: '20px 10px 0px 10px',height:'100%'}}>
+                    <Row gutter={16} style={{height:'100%', marginTop:'-10px'}}>
                         <Col span={4} style={{height:'100%'}}>
                             <Card title="机构树" bordered={false} style={{height:'100%',overflowY:'scroll'}}>
-                                <Tree onSelect={this.onTreeSelect}
+                                <Tree onSelect={this.onOrganizationTreeSelect}
                                       defaultExpandAll
                                       showLine
                                 >
@@ -334,53 +512,77 @@ class SysUser extends Component {
                                 </Tree>
                             </Card>
                         </Col>
-                        <Col span={20}>
-                            <div>
-                                {
-                                    currentMenuButton.map(button =>{
-                                        return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
-                                    })
-                                }
-                            </div>
-                            <div style={{paddingTop:'10px'}}>
-                                <Table columns={columns}
-                                       rowKey={record => record.id}
-                                       dataSource={this.state.currentModuleRoles}
-                                       pagination={false}
-                                       loading={this.state.loading}
-                                       rowSelection={rowSelection}
-                                       scroll={{y:true}}
-                                />
+                        <Col span={20} style={{height:'100%'}}>
+                            <div style={{height:'100%',display:'flex',flexDirection:'column',backgroundColor:'white'}} ref="tableRef">
+                                <div style={{height:'30px',backgroundColor:'#ECECEC', padding:'0px 0px 38px 0px'}}>
+                                    {
+                                        currentMenuButton.map(button =>{
+                                            return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                        })
+                                    }
+                                </div>
+                                <div style={{flex:'auto'}}>
+                                    <Table columns={columns}
+                                           bordered
+                                           size="small"
+                                           rowKey={record => record.id}
+                                           dataSource={this.state.currentOrganizationUsers}
+                                           pagination={this.state.pagination}
+                                           onChange={this.handleTableChange}
+                                           loading={this.state.loading}
+                                           rowSelection={rowSelection}
+                                           scroll={{x:'4000px',y:this.state.tableHeight}}
+                                    />
+                                </div>
                             </div>
                         </Col>
                     </Row>
                 </div>
                 <Modal
-                    title="添加角色"
-                    visible={this.state.addRoleModalVisible}
+                    title="添加用户"
+                    visible={this.state.addUserModalVisible}
+                    destroyOnClose={true}
+                    onCancel={this.hideModal}
+                    footer={null}
+                    width={600}
+                >
+                    <AddUserWindow refreshColumn={this.refreshColumn.bind(this)} organizationTreeData={this.state.organizationTreeData} />
+                </Modal>
+                <Modal
+                    title="修改用户"
+                    visible={this.state.updateUserModalVisible}
                     destroyOnClose={true}
                     onCancel={this.hideModal}
                     footer={null}
                 >
-                    <AddRoleWindow currentSelectModule={this.state.currentSelectModule} modules={this.state.treeData} updateModuleRolesData={this.fetchData.bind(this)}/>
+                    <UpdateUserWindow refreshColumn={this.refreshColumn.bind(this)} currentSelectUser={this.state.currentSelectRow}/>
+                </Modal>
+                <Modal
+                    title="重置用户密码"
+                    visible={this.state.resetPasswordModalVisible}
+                    destroyOnClose={true}
+                    onCancel={this.hideModal}
+                    footer={null}
+                >
+                    <ResetPasswordWindow currentSelectUser={this.state.currentSelectRow}/>
+                </Modal>
+                <Modal
+                    title="调动"
+                    visible={this.state.alterUserOrganizationModalVisible}
+                    destroyOnClose={true}
+                    onCancel={this.hideModal}
+                    footer={null}
+                >
+                    <AlterUserOrganizationWindow refreshColumn={this.refreshColumn.bind(this)} currentSelectUser={this.state.currentSelectRow} organizationTreeData={this.state.organizationTreeData}/>
                 </Modal>
                 <Modal
                     title="修改角色"
-                    visible={this.state.updateRoleModalVisible}
+                    visible={this.state.alterRoleModalVisible}
                     destroyOnClose={true}
                     onCancel={this.hideModal}
                     footer={null}
                 >
-                    <UpdateRoleWindow currentSelectModule={this.state.currentSelectModule} currentSelectRole={this.state.currentSelectRow} modules={this.state.treeData} updateModuleRolesData={this.fetchData.bind(this)} />
-                </Modal>
-                <Modal
-                    title="查看角色"
-                    visible={this.state.viewRoleModalVisible}
-                    destroyOnClose={true}
-                    onCancel={this.hideModal}
-                    footer={null}
-                >
-                    <ViewRoleWindow currentSelectModule={this.state.currentSelectModule} currentSelectRole={this.state.currentSelectRow} modules={this.state.treeData} />
+                    <AlterUserRoleWindow refreshColumn={this.refreshColumn.bind(this)} currentSelectUser={this.state.currentSelectRow}  />
                 </Modal>
 
             </div>

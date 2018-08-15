@@ -1,0 +1,17 @@
+/*.ant-table td { white-space: nowrap; }*/
+
+.col-hidden{
+    color: #40a9ff;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 60px;
+    /*display: -webkit-box;*/
+    /*-webkit-line-clamp: 1;*/
+    /*-webkit-box-orient: vertical;*/
+}
+
+.high-light{
+    color: #40a9ff;
+}
