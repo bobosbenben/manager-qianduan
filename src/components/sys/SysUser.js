@@ -204,7 +204,7 @@ class SysUser extends Component {
             organizationId: organizationId,
             limit: this.state.pageSize,
             ...params
-        },true,'获取用户数据成功')
+        })
             .then(data=>{
                 const pagination = {...this.state.pagination};
                 pagination.pageSize = this.state.pageSize;

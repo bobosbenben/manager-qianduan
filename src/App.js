@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import './index.css';
-import { Layout, Menu, Breadcrumb, Icon} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Avatar, Popover, Modal, List} from 'antd';
 import SysMenu from './components/sys/SysMenu';
 import SysOrganization from './components/sys/SysOrganization';
 import SysRole from './components/sys/SysRole';
 import SysUser from './components/sys/SysUser';
+import UpdateUserPasswordWindow from './components/sys/widgets/UpdateUserPasswordWindow';
 import RepaymentNonPerformingLoan from './components/NonPerformingLoan/repayment';
 import {connect} from 'react-redux';
 import {logout} from './utils/xhr';
-import FontAwesome from 'react-fontawesome';
-
 
 const {SubMenu} = Menu;
 const {Header,Footer,Sider,Content} = Layout;
@@ -32,10 +31,24 @@ class App extends Component {
             breadCrumb: ['homepage'],
             currentMenuKey: "",
             menus: [],
-            tagName: 'link'
+            tagName: 'link',
+            userInfo: props.initialData,
+            updateUserPasswordWindowModalVisible: false
         };
     }
 
+    /**
+     * props更新时更新state
+     * @param nextProps
+     */
+    componentWillReceiveProps(nextProps) {
+        this.setState({userInfo: nextProps.initialData});
+    }
+
+    /**
+     * 点击菜单栏中的一项菜单
+     * @param e
+     */
     onMenuClick= (e)=> {
         this.setState ({
             breadCrumb: e.keyPath.reverse(),
@@ -59,6 +72,11 @@ class App extends Component {
         onSingleMenuClick(buttons);
     };
 
+    /**
+     * 获取菜单对应的中文名称，用于面包屑
+     * @param enTitle
+     * @returns {string}
+     */
     getCnTitle = (enTitle) =>{
         switch(enTitle){
             case "homepage": return "首页";
@@ -73,6 +91,10 @@ class App extends Component {
         }
     };
 
+    /**
+     * 获取菜单对应的模块
+     * @returns {*}
+     */
     getCurrentMenuContent = ()=>{
         switch (this.state.currentMenuKey){
             case "sysmenu": return <SysMenu/>
@@ -85,10 +107,17 @@ class App extends Component {
         }
     };
 
+    /**
+     * 折叠菜单
+     * @param collapsed
+     */
     onCollapse = (collapsed) => {
         this.setState({ collapsed });
     }
 
+    /**
+     * 用户退出登录
+     */
     onLogoutClick=()=>{
         let history = this.props.history;
         logout()
@@ -98,6 +127,27 @@ class App extends Component {
                 history.push('/app');
             }
         });
+    }
+
+    /**
+     * 隐藏modal
+     */
+    hideModal = ()=>{
+        this.setState({
+            updateUserPasswordWindowModalVisible:false
+        });
+    }
+
+    /**
+     * 用户点击查看、修改当前用户资料
+     * */
+    onUserInfoListItemClick = (e)=>{
+        switch (e.target.textContent){
+            case '修改密码': {
+                this.setState({updateUserPasswordWindowModalVisible:true});
+                return;
+            }
+        }
     }
 
   render() {
@@ -110,6 +160,19 @@ class App extends Component {
         marginRight:'10px'
     };
 
+    const data = ['修改密码'];
+
+    const currentUserPopOverContent = (
+        <div>
+            <List
+                header={<div style={{fontWeight:'bold',color:'#87d068'}}>Hi，{this.state.userInfo == null?'':this.state.userInfo.name}</div>}
+                bordered
+                dataSource={data}
+                renderItem={item => (<List.Item style={{cursor:'pointer'}} onClick={this.onUserInfoListItemClick.bind(this)}>{item}</List.Item>)}
+            />
+        </div>
+    );
+
     return (
         <div style={{height:'100%'}}>
         <Layout style={{height: '100%'}}>
@@ -120,9 +183,25 @@ class App extends Component {
                     </div>
                     <h2 style={{color:'#fff'}}>伊金霍洛农村商业银行数据分析系统</h2>
                 </div>
-                <div className="hvr-grow" onClick={this.onLogoutClick}>
-                    <Icon type="logout" style={{ fontSize: 16, color: '#fff'}}/>
-                    <span style={{ fontSize: 16, color: '#fff', paddingLeft:'10px'}}>退出</span>
+                <div style={{display:'flex',flexDirection:'row'}}>
+                    <div style={{marginRight:'15px',cursor:'pointer'}}>
+                        <Popover placement="bottomLeft" content={currentUserPopOverContent} trigger="click">
+                            <Avatar icon="user" style={{ backgroundColor: '#87d068' }}/>
+                        </Popover>
+                    </div>
+                    <div className="hvr-grow" onClick={this.onLogoutClick}>
+                        <Icon type="logout" style={{ fontSize: 16, color: '#fff'}}/>
+                        <span style={{ fontSize: 16, color: '#fff', paddingLeft:'10px'}}>退出</span>
+                    </div>
+                    <Modal
+                        title="修改密码"
+                        visible={this.state.updateUserPasswordWindowModalVisible}
+                        destroyOnClose={true}
+                        onCancel={this.hideModal}
+                        footer={null}
+                    >
+                        <UpdateUserPasswordWindow currentSelectUser={this.state.userInfo}/>
+                    </Modal>
                 </div>
             </Header>
             <Layout style={{height: '100%'}}>
