@@ -14,12 +14,12 @@ const columns = [{
     title: '名称',
     dataIndex: 'name',
     key: 'name',
-    width: '20%'
+    width: '30%'
 },{
     title: '机构号',
     dataIndex: 'code',
     key: 'code',
-    width: '15%'
+    width: '10%'
 },{
     title: '类型',
     dataIndex: 'type',
@@ -29,7 +29,7 @@ const columns = [{
     title: '图标',
     dataIndex: 'iconCls',
     key: 'iconCls',
-    width: '20%'
+    width: '15%'
 },{
     title: '地址',
     dataIndex: 'address',
@@ -217,7 +217,7 @@ class SysOrganization extends Component {
                     <div style={{height:'30px',backgroundColor:'#ECECEC', padding:'5px 0px 38px 0px'}}>
                         {
                             currentMenuButton.map(button =>{
-                                return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                return <Button style={{marginRight:'15px'}} onClick={this.event(button.target)}>{button.name}</Button>
                             })
                         }
                     </div>

@@ -218,11 +218,11 @@ class SysMenu extends Component {
                     <div style={{height:'30px',backgroundColor:'#ECECEC', padding:'5px 0px 38px 0px'}}>
                         {
                             currentMenuButton.map(button =>{
-                                return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                return <Button style={{marginRight:'15px'}} onClick={this.event(button.target)}>{button.name}</Button>
                             })
                         }
                     </div>
-                    <div style={{ marginTop:'10px', flex:'auto'}}>
+                    <div style={{flex:'auto'}}>
                         <Table columns={columns}
                                rowKey={record => record.id}
                                dataSource={this.state.treeData}

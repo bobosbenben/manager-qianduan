@@ -297,7 +297,7 @@ class SysRole extends Component {
                             <div>
                                 {
                                     currentMenuButton.map(button =>{
-                                        return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                        return <Button style={{marginRight:'15px'}} onClick={this.event(button.target)}>{button.name}</Button>
                                     })
                                 }
                             </div>

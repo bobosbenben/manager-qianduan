@@ -6,6 +6,7 @@ import UpdateUserWindow from './widgets/UpdateUserWindow';
 import ResetPasswordWindow from './widgets/ResetPasswordWindow'
 import AlterUserOrganizationWindow from './widgets/AlterUserOrganizationWindow';
 import AlterUserRoleWindow from './widgets/AlterUserRoleWindow';
+import QueryButton from './widgets/common/QueryButton';
 import ReactDOM from "react-dom";
 import {wrapedFetch} from '../../utils/WrapedFetch';
 require('es6-promise').polyfill();
@@ -172,6 +173,7 @@ class SysUser extends Component {
             tableHeight: 0,                  //屏幕高度，用于动态调整屏幕高度
             pagination: {},                  //分页条件
             pageSize: 30,                    //单页条数
+            queryParamsData:{},
             flag: false                      //是否将页数置为1的flag，如果为true，将页数改为1
         };
 
@@ -200,8 +202,19 @@ class SysUser extends Component {
         let organizationId = null;
         if (this.state.currentSelectOrganization !== null && this.state.currentSelectOrganization !== undefined) organizationId = this.state.currentSelectOrganization.id;
 
+        let queryParam = {
+            filter:{
+                organizationId: organizationId,
+                ...this.state.queryParamsData
+            }
+        }
+        console.log('请求的参数是：'); console.log(queryParam);
+
         wrapedFetch('/sys/user/get',{
-            organizationId: organizationId,
+            filter:{
+                organizationId: organizationId,
+                ...this.state.queryParamsData
+            },
             limit: this.state.pageSize,
             ...params
         })
@@ -300,7 +313,20 @@ class SysUser extends Component {
                     currentSelectRow: currentUsers[i]
                 });
         }
-    }
+    };
+
+    setQueryParamsData = (data)=>{
+        this.setState({
+            flag:true,
+            queryParamsData:data
+        },()=>{
+            this.fetchData({
+                start: 0,
+                page: 1
+            })
+        });
+
+    };
 
     event = (menuName)=>{
         var that = this;
@@ -315,7 +341,6 @@ class SysUser extends Component {
                         message.error('请选中将要删除的用户');
                         return;
                     }
-                    console.log('currentSelectRow'); console.log(that.state.currentSelectRow);
                     Modal.warning({
                         title: '警告',
                         okText: '确认',
@@ -418,11 +443,12 @@ class SysUser extends Component {
             let currentSelectOrganization = info.selectedNodes[0].props.dataRef;
             this.setState({
                 currentSelectOrganization: currentSelectOrganization
-            });
-            //在左边树中选中一条模块菜单后，获取该模块菜单的所有角色，并将结果显示在table中
-            this.fetchData({
-                start:0,
-                page:1
+            },()=>{
+                //在左边树中选中一条模块菜单后，获取该模块菜单的所有角色，并将结果显示在table中
+                this.fetchData({
+                    start:0,
+                    page:1
+                });
             });
         }
     }
@@ -451,6 +477,18 @@ class SysUser extends Component {
             },
         };
 
+        const queryItem = [{
+            type: 'string',
+            name: 'userCode',
+            enName: '柜员号',
+            initialValue: null
+        },{
+            type: 'string',
+            name: 'userName',
+            enName: '姓名',
+            initialValue: null
+        }];
+
         return(
             <div style={{overflow:'auto',height:'100%'}}>
                 <div style={{ background: '#ECECEC', padding: '20px 10px 0px 10px',height:'100%'}}>
@@ -470,9 +508,12 @@ class SysUser extends Component {
                                 <div style={{height:'30px',backgroundColor:'#ECECEC', padding:'0px 0px 38px 0px'}}>
                                     {
                                         currentMenuButton.map(button =>{
-                                            return <Button style={{marginRight:'20px'}} onClick={this.event(button.target)}>{button.name}</Button>
+                                            return <Button style={{marginRight:'15px'}} onClick={this.event(button.target)}>{button.name}</Button>
                                         })
                                     }
+                                    <span>
+                                        <QueryButton items={queryItem} setQueryParamsData={this.setQueryParamsData.bind(this)}/>
+                                    </span>
                                 </div>
                                 <div style={{flex:'auto'}}>
                                     <Table columns={columns}
