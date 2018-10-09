@@ -326,7 +326,7 @@ class UpdateRoleWindow extends Component {
                               treeData={this.state.treeData}
                               onChange={this.onMenuTreeSelectChange}
                               treeCheckable={true}
-                              showCheckedStrategy= {SHOW_PARENT}
+                              showCheckedStrategy= {SHOW_ALL}
                               searchPlaceholder= {'请选择权限范围'}
                               style={{width:'100%'}}
                             />

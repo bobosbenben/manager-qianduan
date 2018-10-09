@@ -202,14 +202,6 @@ class SysUser extends Component {
         let organizationId = null;
         if (this.state.currentSelectOrganization !== null && this.state.currentSelectOrganization !== undefined) organizationId = this.state.currentSelectOrganization.id;
 
-        let queryParam = {
-            filter:{
-                organizationId: organizationId,
-                ...this.state.queryParamsData
-            }
-        }
-        console.log('请求的参数是：'); console.log(queryParam);
-
         wrapedFetch('/sys/user/get',{
             filter:{
                 organizationId: organizationId,
@@ -246,7 +238,7 @@ class SysUser extends Component {
             loading: true
         });
 
-        wrapedFetch('/sys/organization/get')
+        wrapedFetch('/sys/user/organization')
             .then(data=>{
                 this.ergodic(data);
                 this.setState({
